@@ -1,0 +1,1327 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <title>LisansSorgula - Bahis & Casino Lisans Kontrolü</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root {
+      --bg: #020617;
+      --card: #020617;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.14);
+      --danger: #ef4444;
+      --danger-soft: rgba(239, 68, 68, 0.16);
+      --yellow: #facc15;
+      --muted: #9ca3af;
+      --text: #e5e7eb;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top left, #1e293b 0, #020617 45%, #000 100%);
+      color: var(--text);
+    }
+
+    h1, h2, h3 {
+      font-weight: 800;
+      letter-spacing: 0.03em;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      background: rgba(15, 23, 42, 0.95);
+      backdrop-filter: blur(16px);
+      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+    }
+
+    .nav {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.85rem 1.25rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      border-radius: 999px;
+      background: conic-gradient(from 0deg, #22c55e, #22c55e, #facc15, #22c55e);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 0 26px rgba(34, 197, 94, 0.6);
+      font-size: 18px;
+      font-weight: 800;
+      color: #022c22;
+    }
+
+    .brand-title {
+      font-size: 1.1rem;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .brand-sub {
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .nav-right {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .nav-link {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      padding: 0.25rem 0.75rem;
+      border-radius: 999px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid rgba(148, 163, 184, 0.4);
+    }
+
+    .nav-link.active {
+      background: linear-gradient(to right, #22c55e, #facc15);
+      color: #022c22;
+      border-color: transparent;
+      box-shadow: 0 0 18px rgba(34, 197, 94, 0.7);
+    }
+
+    .nav-status {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .dot-live {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 10px #22c55e;
+      animation: pulse 1.5s infinite;
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; }
+      50% { transform: scale(1.3); opacity: 0.4; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+
+    main {
+      flex: 1;
+    }
+
+    .container {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 1.3rem 1.25rem 2.5rem;
+    }
+
+    .page-section {
+      display: none;
+    }
+    .page-section.active {
+      display: block;
+    }
+
+    /* Hero & search */
+    .hero-title {
+      font-size: 1.8rem;
+      margin-bottom: 0.2rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(to right, #22c55e, #facc15);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 480px;
+    }
+
+    .search-card {
+      margin-top: 0.8rem;
+      background: radial-gradient(circle at top, rgba(34, 197, 94, 0.18), transparent 55%),
+                  rgba(15, 23, 42, 0.98);
+      border-radius: 1.2rem;
+      padding: 1rem;
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      box-shadow:
+        0 18px 40px rgba(15, 23, 42, 0.95),
+        0 0 0 1px rgba(15, 23, 42, 0.9);
+    }
+
+    .search-row {
+      display: flex;
+      gap: 0.6rem;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .url-input-wrap {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      background: rgba(15, 23, 42, 0.95);
+      border-radius: 999px;
+      padding: 0.35rem 0.7rem;
+      border: 1px solid rgba(51, 65, 85, 0.95);
+    }
+
+    .url-input-wrap span {
+      font-size: 0.8rem;
+      color: var(--muted);
+      display: none;
+    }
+
+    @media (min-width: 640px) {
+      .url-input-wrap span {
+        display: inline-block;
+      }
+    }
+
+    .url-input {
+      border: none;
+      outline: none;
+      background: transparent;
+      color: var(--text);
+      font-size: 0.9rem;
+      flex: 1;
+      min-width: 0;
+    }
+
+    .url-input::placeholder {
+      color: #64748b;
+    }
+
+    .btn-primary {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      border-radius: 999px;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.9rem;
+      font-weight: 700;
+      background: linear-gradient(to right, #22c55e, #16a34a);
+      color: #022c22;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      white-space: nowrap;
+      box-shadow: 0 14px 30px rgba(22, 163, 74, 0.6);
+    }
+
+    .btn-primary:active {
+      transform: translateY(1px);
+      box-shadow: 0 9px 18px rgba(22, 163, 74, 0.7);
+    }
+
+    .btn-primary span {
+      font-size: 1rem;
+    }
+
+    .hint-row {
+      margin-top: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .hint-pill {
+      padding: 0.1rem 0.55rem;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.7);
+    }
+
+    /* Ana panel grid */
+    .grid {
+      margin-top: 1rem;
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      gap: 1rem;
+    }
+
+    @media (max-width: 840px) {
+      .grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: rgba(15, 23, 42, 0.96);
+      border-radius: 1.1rem;
+      padding: 0.9rem 1rem 1rem;
+      border: 1px solid rgba(30, 64, 175, 0.6);
+      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+      font-size: 0.8rem;
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .card-header h2 {
+      margin: 0;
+      font-size: 0.98rem;
+    }
+
+    .tag-soft {
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.4);
+      color: var(--muted);
+      font-size: 0.72rem;
+      font-weight: 500;
+    }
+
+    .empty-text {
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      font-size: 0.76rem;
+      font-weight: 600;
+    }
+
+    .status-pill.safe {
+      background: var(--accent-soft);
+      border: 1px solid rgba(34, 197, 94, 0.9);
+      color: var(--accent);
+    }
+
+    .status-pill.risky {
+      background: var(--danger-soft);
+      border: 1px solid rgba(239, 68, 68, 0.9);
+      color: var(--danger);
+    }
+
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+    }
+
+    .status-dot.safe {
+      background: #22c55e;
+      box-shadow: 0 0 7px #22c55e;
+    }
+
+    .status-dot.risky {
+      background: #ef4444;
+      box-shadow: 0 0 7px #ef4444;
+    }
+
+    .small-url {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.15rem;
+      word-break: break-all;
+    }
+
+    .result-top {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    /* Yuvarlak skor */
+    .score-circle-wrap {
+      width: 100px;
+      height: 100px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .score-circle-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 10%, rgba(250, 204, 21, 0.2), transparent),
+                  #020617;
+      border: 3px solid rgba(30, 64, 175, 0.7);
+      box-shadow: 0 0 20px rgba(15, 23, 42, 0.9);
+    }
+
+    .score-circle-progress {
+      position: absolute;
+      inset: 0;
+      border-radius: 999px;
+      background:
+        conic-gradient(
+          from -90deg,
+          #22c55e var(--p),
+          rgba(55, 65, 81, 0.8) var(--p)
+        );
+      mask:
+        radial-gradient(farthest-side, transparent calc(100% - 13px), black 0);
+      -webkit-mask:
+        radial-gradient(farthest-side, transparent calc(100% - 13px), black 0);
+    }
+
+    .score-circle-value {
+      position: relative;
+      font-size: 1.2rem;
+      font-weight: 800;
+    }
+
+    .score-circle-label {
+      position: relative;
+      font-size: 0.7rem;
+      color: var(--muted);
+    }
+
+    .result-text-block {
+      flex: 1;
+      min-width: 0;
+      font-size: 0.78rem;
+    }
+
+    .result-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+    }
+
+    .result-item {
+      padding: 0.38rem 0.45rem;
+      border-radius: 0.6rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(51, 65, 85, 0.95);
+    }
+
+    .result-item span:first-child {
+      display: block;
+      color: var(--muted);
+      font-size: 0.7rem;
+      margin-bottom: 0.05rem;
+    }
+
+    .result-item span:last-child {
+      font-weight: 600;
+    }
+
+    .promos-wrap {
+      margin-top: 0.7rem;
+      font-size: 0.76rem;
+    }
+
+    .promos-title {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.3rem;
+    }
+
+    .promo-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .promo-chip {
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(234, 179, 8, 0.8);
+      background: rgba(24, 24, 27, 0.95);
+      color: var(--yellow);
+      font-size: 0.72rem;
+      font-weight: 600;
+    }
+
+    /* Şikayet kartı */
+    .complaint-form {
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .input-label {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-weight: 600;
+    }
+
+    .select,
+    .textarea {
+      width: 100%;
+      border-radius: 0.6rem;
+      border: 1px solid rgba(51, 65, 85, 0.95);
+      background: rgba(15, 23, 42, 0.96);
+      color: var(--text);
+      font-size: 0.78rem;
+      padding: 0.4rem 0.5rem;
+      outline: none;
+      resize: vertical;
+      min-height: 54px;
+    }
+
+    .select {
+      min-height: auto;
+    }
+
+    .select:focus,
+    .textarea:focus {
+      border-color: #22c55e;
+      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.6);
+    }
+
+    .complaint-btn {
+      margin-top: 0.2rem;
+      align-self: flex-end;
+      font-size: 0.8rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(to right, #f97316, #facc15);
+      color: #1f2933;
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .complaint-btn:active {
+      transform: translateY(1px);
+    }
+
+    .complaint-list {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      max-height: 210px;
+      overflow-y: auto;
+    }
+
+    .complaint-item {
+      padding: 0.4rem 0.45rem;
+      border-radius: 0.6rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(51, 65, 85, 0.9);
+    }
+
+    .complaint-meta {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 0.15rem;
+    }
+
+    .complaint-type {
+      padding: 0.1rem 0.45rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      font-weight: 500;
+    }
+
+    .complaint-text {
+      font-size: 0.77rem;
+    }
+
+    /* TOP 10 sayfası */
+    .top-info {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .top-list {
+      margin-top: 0.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .top-item {
+      display: flex;
+      align-items: stretch;
+      gap: 0.6rem;
+      padding: 0.45rem 0.5rem;
+      border-radius: 0.7rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(51, 65, 85, 0.95);
+    }
+
+    .top-rank {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      font-weight: 800;
+      background: radial-gradient(circle at 30% 10%, #facc15, #f97316);
+      color: #1f2937;
+      box-shadow: 0 0 18px rgba(234, 179, 8, 0.7);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .top-main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .top-row1 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .top-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+    }
+
+    .top-score {
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #bbf7d0;
+    }
+
+    .top-row2 {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .top-bar {
+      flex: 1;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.95);
+      overflow: hidden;
+      border: 1px solid rgba(30, 64, 175, 0.9);
+    }
+
+    .top-bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      background: linear-gradient(to right, #22c55e, #facc15);
+      width: 0;
+      transition: width 0.4s ease;
+    }
+
+    .top-meta {
+      font-size: 0.73rem;
+      color: var(--muted);
+      white-space: nowrap;
+    }
+
+    /* Yorumlar sayfası */
+    .review-card {
+      position: relative;
+      overflow: hidden;
+      background: radial-gradient(circle at top, rgba(34, 197, 94, 0.16), transparent 60%),
+                  rgba(15, 23, 42, 0.98);
+      border-color: rgba(30, 64, 175, 0.9);
+      transition: opacity 0.4s ease, transform 0.4s ease;
+    }
+
+    .review-main {
+      padding-top: 0.2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .review-quote {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      font-weight: 500;
+    }
+
+    .review-quote span {
+      font-weight: 600;
+    }
+
+    .review-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .review-meta-site {
+      font-weight: 700;
+      font-size: 0.8rem;
+    }
+
+    .review-meta-info {
+      font-size: 0.75rem;
+    }
+
+    .review-dots {
+      display: flex;
+      gap: 0.3rem;
+      margin-top: 0.3rem;
+    }
+
+    .review-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.4);
+      cursor: pointer;
+    }
+
+    .review-dot.active {
+      background: #22c55e;
+      box-shadow: 0 0 8px #22c55e;
+      width: 11px;
+    }
+
+    .review-progress-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    footer {
+      border-top: 1px solid rgba(15, 23, 42, 0.95);
+      background: #020617;
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    .footer-inner {
+      max-width: 960px;
+      margin: 0 auto;
+      padding: 0.7rem 1.25rem 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.5rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-inner strong { color: var(--text); }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header>
+      <div class="nav">
+        <div class="brand">
+          <div class="brand-logo">✔</div>
+          <div>
+            <div class="brand-title">LisansSorgula</div>
+            <div class="brand-sub">Bahis &amp; casino siteleri lisans ve güven paneli</div>
+          </div>
+        </div>
+        <div class="nav-right">
+          <div class="nav-links">
+            <button class="nav-link active" data-page="home">Ana panel</button>
+            <button class="nav-link" data-page="top">Top 10 siteler</button>
+            <button class="nav-link" data-page="reviews">Yorumlar</button>
+          </div>
+          <div class="nav-status">
+            <span class="dot-live"></span>
+            <span>Demo arayüz</span>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="container">
+        <!-- ANA PANEL -->
+        <section id="page-home" class="page-section active">
+          <section class="hero">
+            <h1 class="hero-title">
+              Oynamadan önce <span>siteyi sorgula.</span>
+            </h1>
+            <p class="hero-sub">
+              Bahis ya da casino sitesinin adresini yapıştır; lisans durumu, güven skoru ve oyuncu şikayetlerini tek ekranda gör.
+            </p>
+          </section>
+
+          <section class="search-card">
+            <form id="scanForm">
+              <div class="search-row">
+                <div class="url-input-wrap">
+                  <span>https://</span>
+                  <input
+                    id="siteInput"
+                    class="url-input"
+                    type="text"
+                    placeholder="örnek: www.ornekcasino.com"
+                    autocomplete="off"
+                  />
+                </div>
+                <button type="submit" class="btn-primary">
+                  <span>🔍</span> Tara
+                </button>
+              </div>
+              <div class="hint-row">
+                <div class="hint-pill">Sadece alan adı yeterli</div>
+                <span>Örn: <strong>ornekbahis.com</strong> · <strong>supercasino-nolicense.com</strong></span>
+              </div>
+            </form>
+          </section>
+
+          <section class="grid">
+            <!-- Sonuç kartı -->
+            <div class="card">
+              <div class="card-header">
+                <h2>Site sonucu</h2>
+                <span class="tag-soft" id="resultTagline">Henüz bir site taranmadı</span>
+              </div>
+
+              <div id="resultEmpty" class="empty-text">
+                Bir site adresi gir ve <strong>Tara</strong> butonuna bas. Burada lisans durumu, güven skoru ve promosyonlar görünecek.
+              </div>
+
+              <div id="resultContent" style="display:none;">
+                <div>
+                  <div id="resultStatusPill" class="status-pill safe">
+                    <span class="status-dot safe"></span>
+                    <span id="resultStatusText">Güvenilir</span>
+                  </div>
+                  <div id="resultUrl" class="small-url"></div>
+                </div>
+
+                <div class="result-top">
+                  <div class="score-circle-wrap">
+                    <div class="score-circle-bg"></div>
+                    <div class="score-circle-progress" id="scoreCircle" style="--p: 0deg;"></div>
+                    <div style="position:relative; text-align:center;">
+                      <div class="score-circle-value" id="resultScore">0%</div>
+                      <div class="score-circle-label">Güven skoru</div>
+                    </div>
+                  </div>
+                  <div class="result-text-block">
+                    <div class="result-row">
+                      <div class="result-item">
+                        <span>Lisans durumu</span>
+                        <span id="resultLicense">-</span>
+                      </div>
+                      <div class="result-item">
+                        <span>Oyuncu memnuniyeti</span>
+                        <span id="resultSatisfaction">-</span>
+                      </div>
+                      <div class="result-item">
+                        <span>Ödeme geçmişi</span>
+                        <span id="resultPayments">-</span>
+                      </div>
+                      <div class="result-item">
+                        <span>Risk seviyesi</span>
+                        <span id="resultRisk">-</span>
+                      </div>
+                    </div>
+                    <div style="margin-top:0.4rem;font-size:0.72rem;color:var(--muted);">
+                      Son kontrol: <span id="resultTime">-</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="promos-wrap">
+                  <div class="promos-title">
+                    <span>Promosyon &amp; bonus özeti</span>
+                    <span style="font-size:0.72rem;color:var(--muted);">Demo veridir</span>
+                  </div>
+                  <div id="promoChips" class="promo-chips"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Şikayet kartı -->
+            <div class="card">
+              <div class="card-header">
+                <h2>Şikayet / yorum</h2>
+                <span class="tag-soft" id="complaintSiteLabel">Site seçilmedi</span>
+              </div>
+
+              <div class="complaint-form">
+                <div>
+                  <div class="input-label">Şikayet tipi</div>
+                  <select id="complaintType" class="select">
+                    <option value="Ödeme sorunu">Ödeme sorunu</option>
+                    <option value="Bonus / promosyon">Bonus / promosyon</option>
+                    <option value="Müşteri desteği">Müşteri desteği</option>
+                    <option value="Genel şikayet">Genel şikayet</option>
+                  </select>
+                </div>
+                <div>
+                  <div class="input-label">Kısaca yaz</div>
+                  <textarea
+                    id="complaintText"
+                    class="textarea"
+                    placeholder="Örn: Para çekimim 3 gündür bekliyor..."
+                  ></textarea>
+                </div>
+                <button type="button" id="complaintBtn" class="complaint-btn">
+                  <span>➕</span> Şikayet ekle
+                </button>
+              </div>
+
+              <div id="complaintEmpty" class="empty-text" style="margin-top:0.55rem;">
+                Henüz bu site için kayıtlı şikayet yok. Yeni şikayet eklediğinde aşağıda görünecek (demo).
+              </div>
+
+              <div id="complaintList" class="complaint-list"></div>
+            </div>
+          </section>
+        </section>
+
+        <!-- TOP 10 SAYFASI -->
+        <section id="page-top" class="page-section">
+          <div class="card">
+            <div class="card-header">
+              <h2>En çok aranan siteler</h2>
+              <span class="tag-soft">Top 10 · Demo</span>
+            </div>
+            <p class="top-info">
+              Burada, kullanıcıların bu panelde en çok sorguladığı bahis &amp; casino siteleri listelenir. Arama sayısı arttıkça liste otomatik güncellenir.
+            </p>
+            <div id="topList" class="top-list"></div>
+          </div>
+        </section>
+
+        <!-- YORUMLAR SAYFASI -->
+        <section id="page-reviews" class="page-section">
+          <div class="card review-card" id="reviewCard">
+            <div class="card-header">
+              <h2>Kullanıcı yorumları</h2>
+              <span class="tag-soft">Animasyonlu slider · Demo</span>
+            </div>
+            <div class="review-main">
+              <div class="review-quote">
+                “<span id="reviewText">Panel kullanıcı yorumunu buraya yazıyoruz.</span>”
+              </div>
+              <div class="review-meta">
+                <span class="review-meta-site" id="reviewSite">ornekbahis.com</span>
+                <span class="review-meta-info" id="reviewInfo">Ödeme sorunu · 4 gün içinde çözüldü</span>
+              </div>
+              <div class="review-progress-row">
+                <div id="reviewDots" class="review-dots"></div>
+                <span>Şikayetler örnek/veri amaçlıdır.</span>
+              </div>
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <div class="footer-inner">
+        <span>© <strong>LisansSorgula</strong></span>
+        <span>Bu arayüz sadece demo amaçlıdır, gerçek lisans ve şikayet verisi için sunucu tarafı geliştirme gerekir.</span>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    // --- DEMO ANALİZ FONKSİYONU ---
+    function fakeAnalyze(url) {
+      const clean = url.trim().toLowerCase();
+
+      let safe = true;
+      let score = 92;
+      let license = "Onaylı lisans";
+      let sat = "Yüksek (4.5 / 5)";
+      let pay = "Sorunsuz";
+      let risk = "Düşük";
+
+      if (clean.includes("scam") || clean.includes("fake") || clean.includes("nolicense")) {
+        safe = false;
+        score = 34;
+        license = "Lisans bulunamadı";
+        sat = "Düşük (2.1 / 5)";
+        pay = "Şikayetler yoğun";
+        risk = "Yüksek";
+      } else if (clean.includes("demo") || clean.includes("test")) {
+        safe = true;
+        score = 76;
+        license = "Lisans bilgisi eksik";
+        sat = "Orta (3.4 / 5)";
+        pay = "Kısmen sorunsuz";
+        risk = "Orta";
+      } else if (clean.includes("bet") || clean.includes("casino")) {
+        safe = true;
+        score = 84;
+        license = "Muhtemel lisans – doğrulama gerekli";
+        sat = "İyi (4.0 / 5)";
+        pay = "Genelde sorunsuz";
+        risk = "Düşük / Orta";
+      }
+
+      const promosSafe = [
+        { title: "Hoş geldin bonusu", badge: "+%100 ilk yatırım" },
+        { title: "Free spin paketi", badge: "50 free spin" },
+        { title: "Kayıp iadesi", badge: "%10 haftalık iade" }
+      ];
+
+      const promosRisky = [
+        { title: "Çok yüksek bonuslar", badge: "Dikkat: şartlar ağır" },
+        { title: "Belirsiz promosyon metni", badge: "Koşulları net değil" }
+      ];
+
+      return {
+        safe,
+        score,
+        license,
+        satisfaction: sat,
+        payments: pay,
+        risk,
+        promos: safe ? promosSafe : promosRisky
+      };
+    }
+
+    // --- NAV SAYFA GEÇİŞLERİ ---
+    const navLinks = document.querySelectorAll(".nav-link");
+    const pageSections = document.querySelectorAll(".page-section");
+
+    navLinks.forEach(link => {
+      link.addEventListener("click", () => {
+        const page = link.dataset.page;
+        navLinks.forEach(l => l.classList.remove("active"));
+        link.classList.add("active");
+        pageSections.forEach(sec => {
+          sec.classList.toggle("active", sec.id === "page-" + page);
+        });
+      });
+    });
+
+    // --- ANA PANEL ELEMANLARI ---
+    const form = document.getElementById("scanForm");
+    const input = document.getElementById("siteInput");
+    const resultTagline = document.getElementById("resultTagline");
+    const resultEmpty = document.getElementById("resultEmpty");
+    const resultContent = document.getElementById("resultContent");
+    const resultStatusPill = document.getElementById("resultStatusPill");
+    const resultUrl = document.getElementById("resultUrl");
+    const resultScore = document.getElementById("resultScore");
+    const scoreCircle = document.getElementById("scoreCircle");
+    const resultLicense = document.getElementById("resultLicense");
+    const resultSatisfaction = document.getElementById("resultSatisfaction");
+    const resultPayments = document.getElementById("resultPayments");
+    const resultRisk = document.getElementById("resultRisk");
+    const resultTime = document.getElementById("resultTime");
+    const promoChips = document.getElementById("promoChips");
+
+    const complaintSiteLabel = document.getElementById("complaintSiteLabel");
+    const complaintType = document.getElementById("complaintType");
+    const complaintText = document.getElementById("complaintText");
+    const complaintBtn = document.getElementById("complaintBtn");
+    const complaintEmpty = document.getElementById("complaintEmpty");
+    const complaintList = document.getElementById("complaintList");
+
+    let currentSiteKey = null;
+
+    // Şikayetler ve site istatistikleri
+    const complaintsBySite = {};
+    const siteStats = {
+      "ornekbahis.com": { name: "OrnekBahis", score: 88, count: 12 },
+      "slotmax-demo.com": { name: "SlotMax", score: 81, count: 9 },
+      "supercasino-nolicense.com": { name: "SuperCasino", score: 35, count: 7 },
+      "testbet-demo.net": { name: "TestBet", score: 73, count: 5 }
+    };
+
+    form.addEventListener("submit", function (e) {
+      e.preventDefault();
+      const url = input.value.trim();
+      if (!url) return;
+
+      const analysis = fakeAnalyze(url);
+
+      currentSiteKey = url.toLowerCase();
+      complaintSiteLabel.textContent = currentSiteKey;
+
+      resultEmpty.style.display = "none";
+      resultContent.style.display = "block";
+
+      resultUrl.textContent = url;
+
+      resultScore.textContent = analysis.score + "%";
+      const deg = (analysis.score / 100) * 360 + "deg";
+      scoreCircle.style.setProperty("--p", deg);
+
+      resultLicense.textContent = analysis.license;
+      resultSatisfaction.textContent = analysis.satisfaction;
+      resultPayments.textContent = analysis.payments;
+      resultRisk.textContent = analysis.risk;
+
+      if (analysis.safe) {
+        resultStatusPill.classList.remove("risky");
+        resultStatusPill.classList.add("safe");
+        resultStatusPill.innerHTML = `
+          <span class="status-dot safe"></span>
+          <span id="resultStatusText">Güvenilir</span>
+        `;
+        resultTagline.textContent = "Demo: Bu site güvenli olarak işaretlendi.";
+      } else {
+        resultStatusPill.classList.remove("safe");
+        resultStatusPill.classList.add("risky");
+        resultStatusPill.innerHTML = `
+          <span class="status-dot risky"></span>
+          <span id="resultStatusText">Lisanssız / riskli</span>
+        `;
+        resultTagline.textContent = "Demo: Bu site lisanssız veya yüksek riskli.";
+      }
+
+      resultTime.textContent = "az önce";
+
+      promoChips.innerHTML = "";
+      analysis.promos.forEach(p => {
+        const chip = document.createElement("div");
+        chip.className = "promo-chip";
+        chip.textContent = p.badge + " · " + p.title;
+        promoChips.appendChild(chip);
+      });
+
+      // Site istatistiği güncelle (Top 10 için)
+      const normalizedName = currentSiteKey.replace(/(^https?:\/\/)?(www\.)?/i, "").split("/")[0];
+      if (!siteStats[currentSiteKey]) {
+        siteStats[currentSiteKey] = {
+          name: normalizedName,
+          score: analysis.score,
+          count: 0
+        };
+      }
+      siteStats[currentSiteKey].score = analysis.score;
+      siteStats[currentSiteKey].count += 1;
+      renderTopSites();
+
+      renderComplaints();
+    });
+
+    complaintBtn.addEventListener("click", function () {
+      if (!currentSiteKey) {
+        alert("Önce bir siteyi tara, sonra şikayet ekle.");
+        return;
+      }
+      const text = complaintText.value.trim();
+      if (!text) return;
+
+      if (!complaintsBySite[currentSiteKey]) {
+        complaintsBySite[currentSiteKey] = [];
+      }
+
+      complaintsBySite[currentSiteKey].unshift({
+        type: complaintType.value,
+        text,
+        date: new Date()
+      });
+
+      complaintText.value = "";
+      renderComplaints();
+    });
+
+    function renderComplaints() {
+      if (!currentSiteKey || !complaintsBySite[currentSiteKey] || complaintsBySite[currentSiteKey].length === 0) {
+        complaintEmpty.style.display = "block";
+        complaintList.innerHTML = "";
+        return;
+      }
+
+      complaintEmpty.style.display = "none";
+      complaintList.innerHTML = "";
+
+      const items = complaintsBySite[currentSiteKey].slice(0, 6);
+      items.forEach(item => {
+        const el = document.createElement("div");
+        el.className = "complaint-item";
+
+        const dateStr = item.date.toLocaleDateString("tr-TR", {
+          day: "2-digit",
+          month: "2-digit",
+          year: "2-digit"
+        });
+
+        el.innerHTML = `
+          <div class="complaint-meta">
+            <span class="complaint-type">${item.type}</span>
+            <span>${dateStr}</span>
+          </div>
+          <div class="complaint-text">${item.text}</div>
+        `;
+        complaintList.appendChild(el);
+      });
+    }
+
+    // --- TOP 10 RENDER ---
+    const topList = document.getElementById("topList");
+
+    function renderTopSites() {
+      const entries = Object.entries(siteStats).map(([key, data]) => ({
+        key,
+        ...data
+      }));
+
+      entries.sort((a, b) => b.count - a.count);
+
+      const top10 = entries.slice(0, 10);
+
+      topList.innerHTML = "";
+      if (top10.length === 0) {
+        topList.innerHTML = `<div class="empty-text">Henüz istatistik yok. Ana panelden site taradıkça burada görünecek.</div>`;
+        return;
+      }
+
+      top10.forEach((item, idx) => {
+        const el = document.createElement("div");
+        el.className = "top-item";
+        const width = Math.max(10, Math.min(item.score, 100)); // 10–100 arası
+        el.innerHTML = `
+          <div class="top-rank">#${idx + 1}</div>
+          <div class="top-main">
+            <div class="top-row1">
+              <span class="top-name">${item.name}</span>
+              <span class="top-score">${item.score}%</span>
+            </div>
+            <div class="top-row2">
+              <div class="top-bar">
+                <div class="top-bar-fill" style="width:${width}%;"></div>
+              </div>
+              <div class="top-meta">Arama: ${item.count}</div>
+            </div>
+          </div>
+        `;
+        topList.appendChild(el);
+      });
+    }
+
+    renderTopSites(); // başlangıç demo
+
+    // --- YORUMLAR SLIDER ---
+    const reviewCard = document.getElementById("reviewCard");
+    const reviewText = document.getElementById("reviewText");
+    const reviewSite = document.getElementById("reviewSite");
+    const reviewInfo = document.getElementById("reviewInfo");
+    const reviewDots = document.getElementById("reviewDots");
+
+    const reviewData = [
+      {
+        text: "Para çekimim 2 saat içinde hesabıma geçti, beklediğimden hızlıydı.",
+        site: "ornekbahis.com",
+        info: "Ödeme sorunu · Çözüldü"
+      },
+      {
+        text: "Bonus şartlarını okumadan oynamayın, biraz karışık ama destek ekibi yardımcı oldu.",
+        site: "slotmax-demo.com",
+        info: "Bonus / promosyon · Orta risk"
+      },
+      {
+        text: "Lisans bilgisi net olmadığı için bu panel sayesinde uzak durdum.",
+        site: "supercasino-nolicense.com",
+        info: "Lisans sorunu · Yüksek risk"
+      },
+      {
+        text: "Canlı destek çok hızlı döndü, 10 dakikada problem çözüldü.",
+        site: "testbet-demo.net",
+        info: "Müşteri desteği · Pozitif"
+      }
+    ];
+
+    let reviewIndex = 0;
+
+    function renderReview(index) {
+      const data = reviewData[index];
+      reviewText.textContent = data.text;
+      reviewSite.textContent = data.site;
+      reviewInfo.textContent = data.info;
+
+      reviewDots.innerHTML = "";
+      reviewData.forEach((_, i) => {
+        const dot = document.createElement("div");
+        dot.className = "review-dot" + (i === index ? " active" : "");
+        dot.addEventListener("click", () => {
+          reviewIndex = i;
+          animateReview();
+        });
+        reviewDots.appendChild(dot);
+      });
+    }
+
+    function animateReview() {
+      reviewCard.style.opacity = "0";
+      reviewCard.style.transform = "translateY(8px)";
+      setTimeout(() => {
+        renderReview(reviewIndex);
+        reviewCard.style.opacity = "1";
+        reviewCard.style.transform = "translateY(0)";
+      }, 200);
+    }
+
+    renderReview(reviewIndex);
+    setInterval(() => {
+      reviewIndex = (reviewIndex + 1) % reviewData.length;
+      animateReview();
+    }, 4500);
+  </script>
+</body>
+</html>
