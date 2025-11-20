@@ -2,19 +2,19 @@
 <html lang="tr">
 <head>
   <meta charset="UTF-8" />
-  <title>LisansSorgula - Bahis & Casino Lisans Kontrolü</title>
+  <title>LisansSorgula - Bahis & Casino Liseleri Kontrol Paneli</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <style>
     :root {
-      --bg: #020617;
-      --card: #020617;
-      --accent: #22c55e;
-      --accent-soft: rgba(34, 197, 94, 0.14);
+      --bg: #f3f4f6;
+      --card: #ffffff;
+      --border: #e5e7eb;
+      --red: #e11d48;
+      --red-dark: #b91c1c;
+      --green: #16a34a;
       --danger: #ef4444;
-      --danger-soft: rgba(239, 68, 68, 0.16);
-      --yellow: #facc15;
-      --muted: #9ca3af;
-      --text: #e5e7eb;
+      --muted: #6b7280;
+      --text: #111827;
     }
 
     * { box-sizing: border-box; }
@@ -22,7 +22,7 @@
     body {
       margin: 0;
       font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: radial-gradient(circle at top left, #1e293b 0, #020617 45%, #000 100%);
+      background: var(--bg);
       color: var(--text);
     }
 
@@ -37,19 +37,20 @@
       flex-direction: column;
     }
 
+    /* HEADER */
+
     header {
       position: sticky;
       top: 0;
       z-index: 20;
-      background: rgba(15, 23, 42, 0.95);
-      backdrop-filter: blur(16px);
-      border-bottom: 1px solid rgba(148, 163, 184, 0.25);
+      background: #ffffff;
+      border-bottom: 3px solid var(--red);
     }
 
     .nav {
-      max-width: 960px;
+      max-width: 1040px;
       margin: 0 auto;
-      padding: 0.85rem 1.25rem;
+      padding: 0.8rem 1.25rem;
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -63,22 +64,22 @@
     }
 
     .brand-logo {
-      width: 36px;
-      height: 36px;
-      border-radius: 999px;
-      background: conic-gradient(from 0deg, #22c55e, #22c55e, #facc15, #22c55e);
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: radial-gradient(circle at 30% 20%, #fecaca, #b91c1c);
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 0 0 26px rgba(34, 197, 94, 0.6);
-      font-size: 18px;
-      font-weight: 800;
-      color: #022c22;
+      color: #ffffff;
+      font-weight: 900;
+      font-size: 20px;
+      box-shadow: 0 0 18px rgba(185, 28, 28, 0.6);
     }
 
     .brand-title {
-      font-size: 1.1rem;
-      font-weight: 800;
+      font-size: 1.2rem;
+      font-weight: 900;
       text-transform: uppercase;
     }
 
@@ -90,14 +91,14 @@
     .nav-right {
       display: flex;
       align-items: center;
-      gap: 0.75rem;
+      gap: 0.8rem;
       flex-wrap: wrap;
       justify-content: flex-end;
     }
 
     .nav-links {
       display: flex;
-      gap: 0.35rem;
+      gap: 0.4rem;
       flex-wrap: wrap;
     }
 
@@ -105,26 +106,26 @@
       border: none;
       outline: none;
       cursor: pointer;
-      padding: 0.25rem 0.75rem;
+      padding: 0.3rem 0.8rem;
       border-radius: 999px;
-      font-size: 0.78rem;
-      font-weight: 600;
+      font-size: 0.8rem;
+      font-weight: 700;
       background: transparent;
       color: var(--muted);
-      border: 1px solid rgba(148, 163, 184, 0.4);
+      border: 1px solid var(--border);
     }
 
     .nav-link.active {
-      background: linear-gradient(to right, #22c55e, #facc15);
-      color: #022c22;
+      background: linear-gradient(to right, var(--red), #f97373);
+      color: #ffffff;
       border-color: transparent;
-      box-shadow: 0 0 18px rgba(34, 197, 94, 0.7);
+      box-shadow: 0 0 14px rgba(248, 113, 113, 0.8);
     }
 
     .nav-status {
       display: flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.3rem;
       font-size: 0.75rem;
       color: var(--muted);
     }
@@ -133,14 +134,14 @@
       width: 8px;
       height: 8px;
       border-radius: 999px;
-      background: #22c55e;
-      box-shadow: 0 0 10px #22c55e;
-      animation: pulse 1.5s infinite;
+      background: var(--red);
+      box-shadow: 0 0 10px var(--red);
+      animation: pulse 1.4s infinite;
     }
 
     @keyframes pulse {
       0% { transform: scale(1); opacity: 1; }
-      50% { transform: scale(1.3); opacity: 0.4; }
+      50% { transform: scale(1.25); opacity: 0.4; }
       100% { transform: scale(1); opacity: 1; }
     }
 
@@ -149,47 +150,38 @@
     }
 
     .container {
-      max-width: 960px;
+      max-width: 1040px;
       margin: 0 auto;
-      padding: 1.3rem 1.25rem 2.5rem;
+      padding: 1.4rem 1.25rem 2.2rem;
     }
 
-    .page-section {
-      display: none;
-    }
-    .page-section.active {
-      display: block;
-    }
+    .page-section { display: none; }
+    .page-section.active { display: block; }
 
-    /* Hero & search */
+    /* HERO + SEARCH */
+
     .hero-title {
-      font-size: 1.8rem;
+      font-size: 1.9rem;
       margin-bottom: 0.2rem;
     }
 
     .hero-title span {
-      background: linear-gradient(to right, #22c55e, #facc15);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
+      color: var(--red);
     }
 
     .hero-sub {
       font-size: 0.9rem;
       color: var(--muted);
-      max-width: 480px;
+      max-width: 520px;
     }
 
     .search-card {
-      margin-top: 0.8rem;
-      background: radial-gradient(circle at top, rgba(34, 197, 94, 0.18), transparent 55%),
-                  rgba(15, 23, 42, 0.98);
-      border-radius: 1.2rem;
-      padding: 1rem;
-      border: 1px solid rgba(148, 163, 184, 0.35);
-      box-shadow:
-        0 18px 40px rgba(15, 23, 42, 0.95),
-        0 0 0 1px rgba(15, 23, 42, 0.9);
+      margin-top: 0.9rem;
+      background: #ffffff;
+      border-radius: 14px;
+      padding: 0.9rem 1rem 1rem;
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.08);
     }
 
     .search-row {
@@ -204,22 +196,20 @@
       display: flex;
       align-items: center;
       gap: 0.4rem;
-      background: rgba(15, 23, 42, 0.95);
+      background: #f9fafb;
       border-radius: 999px;
-      padding: 0.35rem 0.7rem;
-      border: 1px solid rgba(51, 65, 85, 0.95);
+      padding: 0.35rem 0.8rem;
+      border: 1px solid var(--border);
     }
 
-    .url-input-wrap span {
-      font-size: 0.8rem;
+    .url-prefix {
+      font-size: 0.78rem;
       color: var(--muted);
       display: none;
     }
 
     @media (min-width: 640px) {
-      .url-input-wrap span {
-        display: inline-block;
-      }
+      .url-prefix { display: inline-block; }
     }
 
     .url-input {
@@ -233,7 +223,7 @@
     }
 
     .url-input::placeholder {
-      color: #64748b;
+      color: #9ca3af;
     }
 
     .btn-primary {
@@ -243,19 +233,19 @@
       border-radius: 999px;
       padding: 0.55rem 1.1rem;
       font-size: 0.9rem;
-      font-weight: 700;
-      background: linear-gradient(to right, #22c55e, #16a34a);
-      color: #022c22;
+      font-weight: 800;
+      background: linear-gradient(to right, var(--red), #fb7185);
+      color: #ffffff;
       display: inline-flex;
       align-items: center;
-      gap: 0.35rem;
+      gap: 0.3rem;
       white-space: nowrap;
-      box-shadow: 0 14px 30px rgba(22, 163, 74, 0.6);
+      box-shadow: 0 10px 20px rgba(248, 113, 113, 0.7);
     }
 
     .btn-primary:active {
       transform: translateY(1px);
-      box-shadow: 0 9px 18px rgba(22, 163, 74, 0.7);
+      box-shadow: 0 6px 14px rgba(248, 113, 113, 0.8);
     }
 
     .btn-primary span {
@@ -264,20 +254,24 @@
 
     .hint-row {
       margin-top: 0.4rem;
-      font-size: 0.75rem;
+      font-size: 0.78rem;
       color: var(--muted);
       display: flex;
-      gap: 0.5rem;
+      gap: 0.6rem;
       flex-wrap: wrap;
     }
 
     .hint-pill {
-      padding: 0.1rem 0.55rem;
+      padding: 0.12rem 0.55rem;
       border-radius: 999px;
-      border: 1px dashed rgba(148, 163, 184, 0.7);
+      border: 1px dashed var(--border);
+      background: #fef2f2;
+      color: var(--red-dark);
+      font-weight: 600;
     }
 
-    /* Ana panel grid */
+    /* GRID */
+
     .grid {
       margin-top: 1rem;
       display: grid;
@@ -292,11 +286,11 @@
     }
 
     .card {
-      background: rgba(15, 23, 42, 0.96);
-      border-radius: 1.1rem;
+      background: var(--card);
+      border-radius: 14px;
       padding: 0.9rem 1rem 1rem;
-      border: 1px solid rgba(30, 64, 175, 0.6);
-      box-shadow: 0 16px 40px rgba(15, 23, 42, 0.9);
+      border: 1px solid var(--border);
+      box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
       font-size: 0.8rem;
     }
 
@@ -310,21 +304,74 @@
 
     .card-header h2 {
       margin: 0;
-      font-size: 0.98rem;
+      font-size: 1rem;
+      text-transform: uppercase;
     }
 
     .tag-soft {
       padding: 0.15rem 0.55rem;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.4);
+      border: 1px solid var(--border);
       color: var(--muted);
       font-size: 0.72rem;
-      font-weight: 500;
+      font-weight: 600;
+      background: #f9fafb;
     }
 
     .empty-text {
-      font-size: 0.78rem;
+      font-size: 0.8rem;
       color: var(--muted);
+    }
+
+    /* SONUÇ KARTI */
+
+    .result-header-row {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      border-bottom: 1px dashed var(--border);
+      padding-bottom: 0.5rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .site-logo {
+      width: 46px;
+      height: 46px;
+      border-radius: 12px;
+      background: #fee2e2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 1rem;
+      color: var(--red-dark);
+      position: relative;
+      overflow: hidden;
+      flex-shrink: 0;
+    }
+
+    .site-logo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #ffffff;
+    }
+
+    .site-logo span {
+      position: relative;
+      z-index: 1;
+    }
+
+    .site-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .site-name {
+      font-size: 0.9rem;
+      font-weight: 800;
     }
 
     .status-pill {
@@ -334,35 +381,26 @@
       padding: 0.2rem 0.6rem;
       border-radius: 999px;
       font-size: 0.76rem;
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .status-pill.safe {
-      background: var(--accent-soft);
-      border: 1px solid rgba(34, 197, 94, 0.9);
-      color: var(--accent);
+      background: #dcfce7;
+      color: var(--green);
+      border: 1px solid #bbf7d0;
     }
 
     .status-pill.risky {
-      background: var(--danger-soft);
-      border: 1px solid rgba(239, 68, 68, 0.9);
+      background: #fee2e2;
       color: var(--danger);
+      border: 1px solid #fecaca;
     }
 
     .status-dot {
       width: 9px;
       height: 9px;
       border-radius: 999px;
-    }
-
-    .status-dot.safe {
-      background: #22c55e;
-      box-shadow: 0 0 7px #22c55e;
-    }
-
-    .status-dot.risky {
-      background: #ef4444;
-      box-shadow: 0 0 7px #ef4444;
+      background: currentColor;
     }
 
     .small-url {
@@ -376,14 +414,14 @@
       display: flex;
       align-items: center;
       gap: 1rem;
-      margin-top: 0.5rem;
       flex-wrap: wrap;
     }
 
     /* Yuvarlak skor */
+
     .score-circle-wrap {
-      width: 100px;
-      height: 100px;
+      width: 96px;
+      height: 96px;
       position: relative;
       display: flex;
       align-items: center;
@@ -394,10 +432,8 @@
       position: absolute;
       inset: 0;
       border-radius: 999px;
-      background: radial-gradient(circle at 30% 10%, rgba(250, 204, 21, 0.2), transparent),
-                  #020617;
-      border: 3px solid rgba(30, 64, 175, 0.7);
-      box-shadow: 0 0 20px rgba(15, 23, 42, 0.9);
+      background: #fef2f2;
+      border: 3px solid #fecaca;
     }
 
     .score-circle-progress {
@@ -407,8 +443,8 @@
       background:
         conic-gradient(
           from -90deg,
-          #22c55e var(--p),
-          rgba(55, 65, 81, 0.8) var(--p)
+          var(--green) var(--p),
+          #fee2e2 var(--p)
         );
       mask:
         radial-gradient(farthest-side, transparent calc(100% - 13px), black 0);
@@ -418,8 +454,8 @@
 
     .score-circle-value {
       position: relative;
-      font-size: 1.2rem;
-      font-weight: 800;
+      font-size: 1.1rem;
+      font-weight: 900;
     }
 
     .score-circle-label {
@@ -431,7 +467,7 @@
     .result-text-block {
       flex: 1;
       min-width: 0;
-      font-size: 0.78rem;
+      font-size: 0.8rem;
     }
 
     .result-row {
@@ -442,10 +478,10 @@
     }
 
     .result-item {
-      padding: 0.38rem 0.45rem;
+      padding: 0.4rem 0.45rem;
       border-radius: 0.6rem;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(51, 65, 85, 0.95);
+      background: #f9fafb;
+      border: 1px solid var(--border);
     }
 
     .result-item span:first-child {
@@ -456,7 +492,13 @@
     }
 
     .result-item span:last-child {
-      font-weight: 600;
+      font-weight: 700;
+    }
+
+    .result-foot {
+      margin-top: 0.4rem;
+      font-size: 0.72rem;
+      color: var(--muted);
     }
 
     .promos-wrap {
@@ -480,14 +522,15 @@
     .promo-chip {
       padding: 0.25rem 0.6rem;
       border-radius: 999px;
-      border: 1px solid rgba(234, 179, 8, 0.8);
-      background: rgba(24, 24, 27, 0.95);
-      color: var(--yellow);
+      border: 1px solid #fed7aa;
+      background: #fffbeb;
+      color: #c2410c;
       font-size: 0.72rem;
-      font-weight: 600;
+      font-weight: 700;
     }
 
-    /* Şikayet kartı */
+    /* ŞİKAYET KARTI */
+
     .complaint-form {
       display: flex;
       flex-direction: column;
@@ -497,15 +540,15 @@
     .input-label {
       font-size: 0.75rem;
       color: var(--muted);
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .select,
     .textarea {
       width: 100%;
       border-radius: 0.6rem;
-      border: 1px solid rgba(51, 65, 85, 0.95);
-      background: rgba(15, 23, 42, 0.96);
+      border: 1px solid var(--border);
+      background: #f9fafb;
       color: var(--text);
       font-size: 0.78rem;
       padding: 0.4rem 0.5rem;
@@ -514,14 +557,13 @@
       min-height: 54px;
     }
 
-    .select {
-      min-height: auto;
-    }
+    .select { min-height: auto; }
 
     .select:focus,
     .textarea:focus {
-      border-color: #22c55e;
-      box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.6);
+      border-color: var(--red);
+      box-shadow: 0 0 0 1px rgba(248, 113, 113, 0.6);
+      background: #ffffff;
     }
 
     .complaint-btn {
@@ -533,16 +575,14 @@
       border: none;
       cursor: pointer;
       background: linear-gradient(to right, #f97316, #facc15);
-      color: #1f2933;
-      font-weight: 700;
+      color: #7c2d12;
+      font-weight: 800;
       display: inline-flex;
       align-items: center;
       gap: 0.3rem;
     }
 
-    .complaint-btn:active {
-      transform: translateY(1px);
-    }
+    .complaint-btn:active { transform: translateY(1px); }
 
     .complaint-list {
       margin-top: 0.6rem;
@@ -556,8 +596,8 @@
     .complaint-item {
       padding: 0.4rem 0.45rem;
       border-radius: 0.6rem;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(51, 65, 85, 0.9);
+      background: #f9fafb;
+      border: 1px solid var(--border);
     }
 
     .complaint-meta {
@@ -573,25 +613,28 @@
     .complaint-type {
       padding: 0.1rem 0.45rem;
       border-radius: 999px;
-      border: 1px solid rgba(148, 163, 184, 0.6);
-      font-weight: 500;
+      border: 1px solid #fecaca;
+      background: #fee2e2;
+      color: var(--danger);
+      font-weight: 700;
     }
 
     .complaint-text {
       font-size: 0.77rem;
     }
 
-    /* TOP 10 sayfası */
+    /* TOP 10 SAYFASI */
+
     .top-info {
       font-size: 0.8rem;
       color: var(--muted);
     }
 
     .top-list {
-      margin-top: 0.6rem;
+      margin-top: 0.7rem;
       display: flex;
       flex-direction: column;
-      gap: 0.45rem;
+      gap: 0.5rem;
     }
 
     .top-item {
@@ -600,24 +643,34 @@
       gap: 0.6rem;
       padding: 0.45rem 0.5rem;
       border-radius: 0.7rem;
-      background: rgba(15, 23, 42, 0.9);
-      border: 1px solid rgba(51, 65, 85, 0.95);
+      background: #ffffff;
+      border: 1px solid var(--border);
     }
 
-    .top-rank {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
+    .top-logo {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
+      background: #fee2e2;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 0.85rem;
-      font-weight: 800;
-      background: radial-gradient(circle at 30% 10%, #facc15, #f97316);
-      color: #1f2937;
-      box-shadow: 0 0 18px rgba(234, 179, 8, 0.7);
+      font-weight: 900;
+      font-size: 0.9rem;
+      color: var(--red-dark);
+      position: relative;
+      overflow: hidden;
       flex-shrink: 0;
       margin-top: 0.1rem;
+    }
+
+    .top-logo img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      background: #ffffff;
     }
 
     .top-main {
@@ -636,13 +689,13 @@
 
     .top-name {
       font-size: 0.85rem;
-      font-weight: 700;
+      font-weight: 800;
     }
 
     .top-score {
       font-size: 0.8rem;
-      font-weight: 700;
-      color: #bbf7d0;
+      font-weight: 800;
+      color: var(--green);
     }
 
     .top-row2 {
@@ -653,17 +706,17 @@
 
     .top-bar {
       flex: 1;
-      height: 7px;
+      height: 8px;
       border-radius: 999px;
-      background: rgba(15, 23, 42, 0.95);
+      background: #f3f4f6;
       overflow: hidden;
-      border: 1px solid rgba(30, 64, 175, 0.9);
+      border: 1px solid var(--border);
     }
 
     .top-bar-fill {
       height: 100%;
       border-radius: 999px;
-      background: linear-gradient(to right, #22c55e, #facc15);
+      background: linear-gradient(to right, var(--red), #facc15);
       width: 0;
       transition: width 0.4s ease;
     }
@@ -674,14 +727,14 @@
       white-space: nowrap;
     }
 
-    /* Yorumlar sayfası */
+    /* YORUMLAR SAYFASI */
+
     .review-card {
       position: relative;
       overflow: hidden;
-      background: radial-gradient(circle at top, rgba(34, 197, 94, 0.16), transparent 60%),
-                  rgba(15, 23, 42, 0.98);
-      border-color: rgba(30, 64, 175, 0.9);
-      transition: opacity 0.4s ease, transform 0.4s ease;
+      background: #ffffff;
+      border-color: var(--border);
+      transition: opacity 0.3s ease, transform 0.3s ease;
     }
 
     .review-main {
@@ -692,13 +745,13 @@
     }
 
     .review-quote {
-      font-size: 0.95rem;
+      font-size: 1rem;
       line-height: 1.5;
       font-weight: 500;
     }
 
     .review-quote span {
-      font-weight: 600;
+      font-weight: 700;
     }
 
     .review-meta {
@@ -712,12 +765,9 @@
     }
 
     .review-meta-site {
-      font-weight: 700;
-      font-size: 0.8rem;
-    }
-
-    .review-meta-info {
-      font-size: 0.75rem;
+      font-weight: 800;
+      font-size: 0.82rem;
+      color: var(--red-dark);
     }
 
     .review-dots {
@@ -730,14 +780,14 @@
       width: 7px;
       height: 7px;
       border-radius: 999px;
-      background: rgba(148, 163, 184, 0.4);
+      background: #e5e7eb;
       cursor: pointer;
     }
 
     .review-dot.active {
-      background: #22c55e;
-      box-shadow: 0 0 8px #22c55e;
-      width: 11px;
+      background: var(--red);
+      box-shadow: 0 0 8px var(--red);
+      width: 10px;
     }
 
     .review-progress-row {
@@ -751,14 +801,14 @@
     }
 
     footer {
-      border-top: 1px solid rgba(15, 23, 42, 0.95);
-      background: #020617;
+      border-top: 1px solid var(--border);
+      background: #ffffff;
       font-size: 0.72rem;
       color: var(--muted);
     }
 
     .footer-inner {
-      max-width: 960px;
+      max-width: 1040px;
       margin: 0 auto;
       padding: 0.7rem 1.25rem 0.9rem;
       display: flex;
@@ -776,16 +826,16 @@
     <header>
       <div class="nav">
         <div class="brand">
-          <div class="brand-logo">✔</div>
+          <div class="brand-logo">LS</div>
           <div>
             <div class="brand-title">LisansSorgula</div>
-            <div class="brand-sub">Bahis &amp; casino siteleri lisans ve güven paneli</div>
+            <div class="brand-sub">Bahis &amp; casino siteleri lisans / güven kontrolü</div>
           </div>
         </div>
         <div class="nav-right">
           <div class="nav-links">
             <button class="nav-link active" data-page="home">Ana panel</button>
-            <button class="nav-link" data-page="top">Top 10 siteler</button>
+            <button class="nav-link" data-page="top">Top 10</button>
             <button class="nav-link" data-page="reviews">Yorumlar</button>
           </div>
           <div class="nav-status">
@@ -805,7 +855,7 @@
               Oynamadan önce <span>siteyi sorgula.</span>
             </h1>
             <p class="hero-sub">
-              Bahis ya da casino sitesinin adresini yapıştır; lisans durumu, güven skoru ve oyuncu şikayetlerini tek ekranda gör.
+              Bahis ya da casino sitesinin adresini yapıştır; lisans durumu, güven skoru, promosyon özeti ve kullanıcı şikayetlerini tek ekranda gör.
             </p>
           </section>
 
@@ -813,12 +863,12 @@
             <form id="scanForm">
               <div class="search-row">
                 <div class="url-input-wrap">
-                  <span>https://</span>
+                  <span class="url-prefix">https://</span>
                   <input
                     id="siteInput"
                     class="url-input"
                     type="text"
-                    placeholder="örnek: www.ornekcasino.com"
+                    placeholder="örnek: www.ornekbahis.com"
                     autocomplete="off"
                   />
                 </div>
@@ -842,16 +892,25 @@
               </div>
 
               <div id="resultEmpty" class="empty-text">
-                Bir site adresi gir ve <strong>Tara</strong> butonuna bas. Burada lisans durumu, güven skoru ve promosyonlar görünecek.
+                Bir site adresi gir ve <strong>Tara</strong> butonuna bas. Lisans durumu, güven skoru ve promosyonlar bu alanda görünecek.
               </div>
 
               <div id="resultContent" style="display:none;">
-                <div>
-                  <div id="resultStatusPill" class="status-pill safe">
-                    <span class="status-dot safe"></span>
-                    <span id="resultStatusText">Güvenilir</span>
+                <div class="result-header-row">
+                  <div class="site-logo" id="resultLogo">
+                    <span id="resultLogoText">LS</span>
+                    <!-- İstersen buraya JS ile img ekleyerek gerçek logo gösterebilirsin -->
                   </div>
-                  <div id="resultUrl" class="small-url"></div>
+                  <div class="site-info">
+                    <div class="site-name" id="resultSiteName">–</div>
+                    <div class="small-url" id="resultUrl"></div>
+                  </div>
+                  <div>
+                    <div id="resultStatusPill" class="status-pill safe">
+                      <span class="status-dot"></span>
+                      <span id="resultStatusText">Güvenilir</span>
+                    </div>
+                  </div>
                 </div>
 
                 <div class="result-top">
@@ -860,7 +919,7 @@
                     <div class="score-circle-progress" id="scoreCircle" style="--p: 0deg;"></div>
                     <div style="position:relative; text-align:center;">
                       <div class="score-circle-value" id="resultScore">0%</div>
-                      <div class="score-circle-label">Güven skoru</div>
+                      <div class="score-circle-label">Genel güven skoru</div>
                     </div>
                   </div>
                   <div class="result-text-block">
@@ -882,7 +941,7 @@
                         <span id="resultRisk">-</span>
                       </div>
                     </div>
-                    <div style="margin-top:0.4rem;font-size:0.72rem;color:var(--muted);">
+                    <div class="result-foot">
                       Son kontrol: <span id="resultTime">-</span>
                     </div>
                   </div>
@@ -945,7 +1004,7 @@
               <span class="tag-soft">Top 10 · Demo</span>
             </div>
             <p class="top-info">
-              Burada, kullanıcıların bu panelde en çok sorguladığı bahis &amp; casino siteleri listelenir. Arama sayısı arttıkça liste otomatik güncellenir.
+              Bu listede, panelde en çok sorgulanan bahis &amp; casino siteleri sıralanır. Arama sayısı arttıkça liste otomatik güncellenir.
             </p>
             <div id="topList" class="top-list"></div>
           </div>
@@ -964,11 +1023,11 @@
               </div>
               <div class="review-meta">
                 <span class="review-meta-site" id="reviewSite">ornekbahis.com</span>
-                <span class="review-meta-info" id="reviewInfo">Ödeme sorunu · 4 gün içinde çözüldü</span>
+                <span id="reviewInfo">Ödeme sorunu · 4 gün içinde çözüldü</span>
               </div>
               <div class="review-progress-row">
                 <div id="reviewDots" class="review-dots"></div>
-                <span>Şikayetler örnek/veri amaçlıdır.</span>
+                <span>Yorumlar örnek/veri amaçlıdır.</span>
               </div>
             </div>
           </div>
@@ -979,13 +1038,13 @@
     <footer>
       <div class="footer-inner">
         <span>© <strong>LisansSorgula</strong></span>
-        <span>Bu arayüz sadece demo amaçlıdır, gerçek lisans ve şikayet verisi için sunucu tarafı geliştirme gerekir.</span>
+        <span>Bu arayüz demo amaçlıdır, gerçek lisans / şikayet verisi için backend gerekir.</span>
       </div>
     </footer>
   </div>
 
   <script>
-    // --- DEMO ANALİZ FONKSİYONU ---
+    // ------ DEMO ANALİZ ------
     function fakeAnalyze(url) {
       const clean = url.trim().toLowerCase();
 
@@ -1041,7 +1100,7 @@
       };
     }
 
-    // --- NAV SAYFA GEÇİŞLERİ ---
+    // ------ NAV SAYFALAR ------
     const navLinks = document.querySelectorAll(".nav-link");
     const pageSections = document.querySelectorAll(".page-section");
 
@@ -1056,14 +1115,19 @@
       });
     });
 
-    // --- ANA PANEL ELEMANLARI ---
+    // ------ ANA PANEL ELEMENTLER ------
     const form = document.getElementById("scanForm");
     const input = document.getElementById("siteInput");
     const resultTagline = document.getElementById("resultTagline");
     const resultEmpty = document.getElementById("resultEmpty");
     const resultContent = document.getElementById("resultContent");
-    const resultStatusPill = document.getElementById("resultStatusPill");
+
+    const resultLogo = document.getElementById("resultLogo");
+    const resultLogoText = document.getElementById("resultLogoText");
+    const resultSiteName = document.getElementById("resultSiteName");
     const resultUrl = document.getElementById("resultUrl");
+    const resultStatusPill = document.getElementById("resultStatusPill");
+    const resultStatusText = document.getElementById("resultStatusText");
     const resultScore = document.getElementById("resultScore");
     const scoreCircle = document.getElementById("scoreCircle");
     const resultLicense = document.getElementById("resultLicense");
@@ -1082,7 +1146,15 @@
 
     let currentSiteKey = null;
 
-    // Şikayetler ve site istatistikleri
+    // LOGO MAP – buraya gerçek logo URL’lerini girip img ekleyebilirsin
+    const siteLogos = {
+      "ornekbahis.com": "", // "https://senin-cdn.com/ornekbahis-logo.png"
+      "slotmax-demo.com": "",
+      "supercasino-nolicense.com": "",
+      "testbet-demo.net": ""
+    };
+
+    // Şikayetler & Top 10 istatistikleri
     const complaintsBySite = {};
     const siteStats = {
       "ornekbahis.com": { name: "OrnekBahis", score: 88, count: 12 },
@@ -1091,237 +1163,18 @@
       "testbet-demo.net": { name: "TestBet", score: 73, count: 5 }
     };
 
-    form.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const url = input.value.trim();
-      if (!url) return;
-
-      const analysis = fakeAnalyze(url);
-
-      currentSiteKey = url.toLowerCase();
-      complaintSiteLabel.textContent = currentSiteKey;
-
-      resultEmpty.style.display = "none";
-      resultContent.style.display = "block";
-
-      resultUrl.textContent = url;
-
-      resultScore.textContent = analysis.score + "%";
-      const deg = (analysis.score / 100) * 360 + "deg";
-      scoreCircle.style.setProperty("--p", deg);
-
-      resultLicense.textContent = analysis.license;
-      resultSatisfaction.textContent = analysis.satisfaction;
-      resultPayments.textContent = analysis.payments;
-      resultRisk.textContent = analysis.risk;
-
-      if (analysis.safe) {
-        resultStatusPill.classList.remove("risky");
-        resultStatusPill.classList.add("safe");
-        resultStatusPill.innerHTML = `
-          <span class="status-dot safe"></span>
-          <span id="resultStatusText">Güvenilir</span>
-        `;
-        resultTagline.textContent = "Demo: Bu site güvenli olarak işaretlendi.";
-      } else {
-        resultStatusPill.classList.remove("safe");
-        resultStatusPill.classList.add("risky");
-        resultStatusPill.innerHTML = `
-          <span class="status-dot risky"></span>
-          <span id="resultStatusText">Lisanssız / riskli</span>
-        `;
-        resultTagline.textContent = "Demo: Bu site lisanssız veya yüksek riskli.";
-      }
-
-      resultTime.textContent = "az önce";
-
-      promoChips.innerHTML = "";
-      analysis.promos.forEach(p => {
-        const chip = document.createElement("div");
-        chip.className = "promo-chip";
-        chip.textContent = p.badge + " · " + p.title;
-        promoChips.appendChild(chip);
-      });
-
-      // Site istatistiği güncelle (Top 10 için)
-      const normalizedName = currentSiteKey.replace(/(^https?:\/\/)?(www\.)?/i, "").split("/")[0];
-      if (!siteStats[currentSiteKey]) {
-        siteStats[currentSiteKey] = {
-          name: normalizedName,
-          score: analysis.score,
-          count: 0
-        };
-      }
-      siteStats[currentSiteKey].score = analysis.score;
-      siteStats[currentSiteKey].count += 1;
-      renderTopSites();
-
-      renderComplaints();
-    });
-
-    complaintBtn.addEventListener("click", function () {
-      if (!currentSiteKey) {
-        alert("Önce bir siteyi tara, sonra şikayet ekle.");
-        return;
-      }
-      const text = complaintText.value.trim();
-      if (!text) return;
-
-      if (!complaintsBySite[currentSiteKey]) {
-        complaintsBySite[currentSiteKey] = [];
-      }
-
-      complaintsBySite[currentSiteKey].unshift({
-        type: complaintType.value,
-        text,
-        date: new Date()
-      });
-
-      complaintText.value = "";
-      renderComplaints();
-    });
-
-    function renderComplaints() {
-      if (!currentSiteKey || !complaintsBySite[currentSiteKey] || complaintsBySite[currentSiteKey].length === 0) {
-        complaintEmpty.style.display = "block";
-        complaintList.innerHTML = "";
-        return;
-      }
-
-      complaintEmpty.style.display = "none";
-      complaintList.innerHTML = "";
-
-      const items = complaintsBySite[currentSiteKey].slice(0, 6);
-      items.forEach(item => {
-        const el = document.createElement("div");
-        el.className = "complaint-item";
-
-        const dateStr = item.date.toLocaleDateString("tr-TR", {
-          day: "2-digit",
-          month: "2-digit",
-          year: "2-digit"
-        });
-
-        el.innerHTML = `
-          <div class="complaint-meta">
-            <span class="complaint-type">${item.type}</span>
-            <span>${dateStr}</span>
-          </div>
-          <div class="complaint-text">${item.text}</div>
-        `;
-        complaintList.appendChild(el);
-      });
+    function getDomainLabel(url) {
+      const clean = url
+        .toLowerCase()
+        .replace(/(^https?:\/\/)?(www\.)?/i, "")
+        .split("/")[0];
+      return clean || url;
     }
 
-    // --- TOP 10 RENDER ---
-    const topList = document.getElementById("topList");
-
-    function renderTopSites() {
-      const entries = Object.entries(siteStats).map(([key, data]) => ({
-        key,
-        ...data
-      }));
-
-      entries.sort((a, b) => b.count - a.count);
-
-      const top10 = entries.slice(0, 10);
-
-      topList.innerHTML = "";
-      if (top10.length === 0) {
-        topList.innerHTML = `<div class="empty-text">Henüz istatistik yok. Ana panelden site taradıkça burada görünecek.</div>`;
-        return;
-      }
-
-      top10.forEach((item, idx) => {
-        const el = document.createElement("div");
-        el.className = "top-item";
-        const width = Math.max(10, Math.min(item.score, 100)); // 10–100 arası
-        el.innerHTML = `
-          <div class="top-rank">#${idx + 1}</div>
-          <div class="top-main">
-            <div class="top-row1">
-              <span class="top-name">${item.name}</span>
-              <span class="top-score">${item.score}%</span>
-            </div>
-            <div class="top-row2">
-              <div class="top-bar">
-                <div class="top-bar-fill" style="width:${width}%;"></div>
-              </div>
-              <div class="top-meta">Arama: ${item.count}</div>
-            </div>
-          </div>
-        `;
-        topList.appendChild(el);
-      });
-    }
-
-    renderTopSites(); // başlangıç demo
-
-    // --- YORUMLAR SLIDER ---
-    const reviewCard = document.getElementById("reviewCard");
-    const reviewText = document.getElementById("reviewText");
-    const reviewSite = document.getElementById("reviewSite");
-    const reviewInfo = document.getElementById("reviewInfo");
-    const reviewDots = document.getElementById("reviewDots");
-
-    const reviewData = [
-      {
-        text: "Para çekimim 2 saat içinde hesabıma geçti, beklediğimden hızlıydı.",
-        site: "ornekbahis.com",
-        info: "Ödeme sorunu · Çözüldü"
-      },
-      {
-        text: "Bonus şartlarını okumadan oynamayın, biraz karışık ama destek ekibi yardımcı oldu.",
-        site: "slotmax-demo.com",
-        info: "Bonus / promosyon · Orta risk"
-      },
-      {
-        text: "Lisans bilgisi net olmadığı için bu panel sayesinde uzak durdum.",
-        site: "supercasino-nolicense.com",
-        info: "Lisans sorunu · Yüksek risk"
-      },
-      {
-        text: "Canlı destek çok hızlı döndü, 10 dakikada problem çözüldü.",
-        site: "testbet-demo.net",
-        info: "Müşteri desteği · Pozitif"
-      }
-    ];
-
-    let reviewIndex = 0;
-
-    function renderReview(index) {
-      const data = reviewData[index];
-      reviewText.textContent = data.text;
-      reviewSite.textContent = data.site;
-      reviewInfo.textContent = data.info;
-
-      reviewDots.innerHTML = "";
-      reviewData.forEach((_, i) => {
-        const dot = document.createElement("div");
-        dot.className = "review-dot" + (i === index ? " active" : "");
-        dot.addEventListener("click", () => {
-          reviewIndex = i;
-          animateReview();
-        });
-        reviewDots.appendChild(dot);
-      });
-    }
-
-    function animateReview() {
-      reviewCard.style.opacity = "0";
-      reviewCard.style.transform = "translateY(8px)";
-      setTimeout(() => {
-        renderReview(reviewIndex);
-        reviewCard.style.opacity = "1";
-        reviewCard.style.transform = "translateY(0)";
-      }, 200);
-    }
-
-    renderReview(reviewIndex);
-    setInterval(() => {
-      reviewIndex = (reviewIndex + 1) % reviewData.length;
-      animateReview();
-    }, 4500);
-  </script>
-</body>
-</html>
+    function getLogoTextFromDomain(domain) {
+      const d = domain.replace(/(^https?:\/\/)?(www\.)?/i, "").split("/")[0];
+      if (!d) return "LS";
+      const parts = d.split(".");
+      const base = parts[0] || d;
+      const letters = base.replace(/[^a-z0-9]/gi, "");
+      if (letters.length >= 2) return letters.slice(0, 2).
